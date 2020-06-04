@@ -1,0 +1,19 @@
+{
+  "name": "sdflint",
+  "version": "0.1.0",
+  "description": "SDF linter",
+  "main": "sdflint.js",
+  "dependencies": {
+    "ajv": "^6.10.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/one-data-model/tools.git"
+  },
+  "author": "Ari Keränen",
+  "license": "BSD-3-Clause"
+}
