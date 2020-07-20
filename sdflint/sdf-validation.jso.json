@@ -1,16 +1,16 @@
 {
   "title": "sdf-validation.cddl",
-  "$ schema": "http://json-schema.org/draft-07/schema#",
-  "$ ref": "# / definitions / sdf-syntax",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/sdf-syntax",
   "definitions": {
-    "sdf syntax": {
+    "sdf-syntax": {
       "type": "object",
       "required": [
         "info"
       ],
       "properties": {
         "info": {
-          "$ ref": "# / definitions / sdfinfo"
+          "$ref": "#/definitions/sdfinfo"
         },
         "namespace": {
           "type": "object",
@@ -24,43 +24,43 @@
         "sdfThing": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / thingqualities"
+            "$ref": "#/definitions/thingqualities"
           }
         },
         "sdfProduct": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / productqualities"
+            "$ref": "#/definitions/productqualities"
           }
         },
         "sdfObject": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / objectqualities"
+            "$ref": "#/definitions/objectqualities"
           }
         },
         "sdfProperty": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / propertyqualities"
+            "$ref": "#/definitions/propertyqualities"
           }
         },
         "sdfAction": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / actionqualities"
+            "$ref": "#/definitions/actionqualities"
           }
         },
         "sdfEvent": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / eventqualities"
+            "$ref": "#/definitions/eventqualities"
           }
         },
         "sdfData": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / dataqualities"
+            "$ref": "#/definitions/dataqualities"
           }
         }
       },
@@ -96,13 +96,13 @@
         "sdfObject": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / objectqualities"
+            "$ref": "#/definitions/objectqualities"
           }
         },
         "sdfThing": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / thingqualities"
+            "$ref": "#/definitions/thingqualities"
           }
         },
         "description": {
@@ -111,14 +111,14 @@
         "label": {
           "type": "string"
         },
-        "$ comment": {
+        "$comment": {
           "type": "string"
         },
         "sdfRef": {
-          "$ ref": "# / definitions / sdf-pointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "sdfRequired": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         }
       },
       "additionalProperties": false
@@ -132,14 +132,14 @@
         "label": {
           "type": "string"
         },
-        "$ comment": {
+        "$comment": {
           "type": "string"
         },
         "sdfRef": {
-          "$ ref": "# / definitions / sdf-pointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "sdfRequired": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         }
       },
       "additionalProperties": false
@@ -150,7 +150,7 @@
     "pointer-list": {
       "type": "array",
       "items": {
-        "$ ref": "# / definitions / sdf-pointer"
+        "$ref": "#/definitions/sdf-pointer"
       }
     },
     "objectqualities": {
@@ -159,25 +159,25 @@
         "sdfProperty": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / propertyqualities"
+            "$ref": "#/definitions/propertyqualities"
           }
         },
         "sdfAction": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / actionqualities"
+            "$ref": "#/definitions/actionqualities"
           }
         },
         "sdfEvent": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / eventqualities"
+            "$ref": "#/definitions/eventqualities"
           }
         },
         "sdfData": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / dataqualities"
+            "$ref": "#/definitions/dataqualities"
           }
         },
         "description": {
@@ -186,20 +186,20 @@
         "label": {
           "type": "string"
         },
-        "$ comment": {
+        "$comment": {
           "type": "string"
         },
         "sdfRef": {
-          "$ ref": "# / definitions / sdf-pointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "sdfRequired": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         }
       },
       "additionalProperties": false
     },
     "propertyqualities": {
-      "$ ref": "# / definitions / dataqualities"
+      "$ref": "#/definitions/dataqualities"
     },
     "dataqualities": {
       "type": "object",
@@ -228,8 +228,8 @@
         "subtype": {
           "type": "string",
           "enum": [
-            "byte string",
-            "unix time"
+            "byte-string",
+            "unix-time"
           ]
         },
         "contentFormat": {
@@ -248,15 +248,15 @@
         "enum": {
           "type": "array",
           "items": {
-            "$ ref": "# / definitions / allowed-types"
+            "$ref": "#/definitions/allowed-types"
           },
           "minItems": 1
         },
         "const": {
-          "$ ref": "# / definitions / allowed-types"
+          "$ref": "#/definitions/allowed-types"
         },
         "default": {
-          "$ ref": "# / definitions / allowed-types"
+          "$ref": "#/definitions/allowed-types"
         },
         "minimum": {
           "type": "number"
@@ -320,12 +320,12 @@
           "type": "object",
           "properties": {
             "sdfRef": {
-              "$ ref": "# / definitions / sdf-pointer"
+              "$ref": "#/definitions/sdf-pointer"
             },
             "description": {
               "type": "string"
             },
-            "$ comment": {
+            "$comment": {
               "type": "string"
             },
             "type": {
@@ -365,14 +365,14 @@
         "label": {
           "type": "string"
         },
-        "$ comment": {
+        "$comment": {
           "type": "string"
         },
         "sdfRef": {
-          "$ ref": "# / definitions / sdf-pointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "sdfRequired": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         }
       },
       "additionalProperties": false
@@ -393,15 +393,15 @@
         "enum": {
           "type": "array",
           "items": {
-            "$ ref": "# / definitions / allowed-types"
+            "$ref": "#/definitions/allowed-types"
           },
           "minItems": 1
         },
         "const": {
-          "$ ref": "# / definitions / allowed-types"
+          "$ref": "#/definitions/allowed-types"
         },
         "default": {
-          "$ ref": "# / definitions / allowed-types"
+          "$ref": "#/definitions/allowed-types"
         },
         "minimum": {
           "type": "number"
@@ -465,12 +465,12 @@
           "type": "object",
           "properties": {
             "sdfRef": {
-              "$ ref": "# / definitions / sdf-pointer"
+              "$ref": "#/definitions/sdf-pointer"
             },
             "description": {
               "type": "string"
             },
-            "$ comment": {
+            "$comment": {
               "type": "string"
             },
             "type": {
@@ -545,18 +545,18 @@
       "type": "object",
       "properties": {
         "sdfInputData": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         },
         "sdfRequiredInputData": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         },
         "sdfOutputData": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         },
         "sdfData": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / dataqualities"
+            "$ref": "#/definitions/dataqualities"
           }
         },
         "description": {
@@ -565,14 +565,14 @@
         "label": {
           "type": "string"
         },
-        "$ comment": {
+        "$comment": {
           "type": "string"
         },
         "sdfRef": {
-          "$ ref": "# / definitions / sdf-pointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "sdfRequired": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         }
       },
       "additionalProperties": false
@@ -581,12 +581,12 @@
       "type": "object",
       "properties": {
         "sdfOutputData": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         },
         "sdfData": {
           "type": "object",
           "additionalProperties": {
-            "$ ref": "# / definitions / dataqualities"
+            "$ref": "#/definitions/dataqualities"
           }
         },
         "description": {
@@ -595,20 +595,20 @@
         "label": {
           "type": "string"
         },
-        "$ comment": {
+        "$comment": {
           "type": "string"
         },
         "sdfRef": {
-          "$ ref": "# / definitions / sdf-pointer"
+          "$ref": "#/definitions/sdf-pointer"
         },
         "sdfRequired": {
-          "$ ref": "# / definitions / pointer-list"
+          "$ref": "#/definitions/pointer-list"
         }
       },
       "additionalProperties": false
     },
     "productqualities": {
-      "$ ref": "# / definitions / thingqualities"
+      "$ref": "#/definitions/thingqualities"
     }
   }
 }
