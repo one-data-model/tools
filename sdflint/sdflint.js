@@ -8,8 +8,7 @@ const Ajv = require('ajv');
 const path = require('path');
 
 const AJV_OPTIONS = {
-  "allErrors": true,
-  "format": "full"
+  "allErrors": true
 }
 
 /* Regular expression for valid SDF file names */
