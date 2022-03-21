@@ -4,7 +4,7 @@
   "description": "SDF linter",
   "main": "sdflint.js",
   "dependencies": {
-    "ajv": "^6.10.1"
+    "ajv": "^8.10.0"
   },
   "devDependencies": {},
   "scripts": {
