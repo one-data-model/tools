@@ -31,29 +31,44 @@ if (require.main === module) { /* run as stand-alone? */
     let sdfFile;
     let inFile = process.argv[2];
     let appDir = path.dirname(require.main.filename);
+    let options = {};
+    let schemaFile;
 
-    let schemaFile = process.argv.length > 3 ?
-     process.argv[3] : (appDir + "/" + DEF_SCHEMA_FILE);
+    process.argv.slice(3).forEach( (option) => {
+      let name = option.substring(0, option.indexOf("="));
+      let value = option.substring(option.indexOf("=") + 1);
+      options[name] = value;
+    });
+
+    schemaFile = options.schema ?
+      options.schema : (appDir + "/" + DEF_SCHEMA_FILE);
 
     fileNameCheck(inFile, res);
 
     try {
-      sdfFile = JSON.parse(fs.readFileSync(inFile,
-        { encoding: 'utf-8' }));
+      sdfFile = fs.readFileSync(inFile,
+        { encoding: 'utf-8' });
       schema = JSON.parse(fs.readFileSync(schemaFile,
         { encoding: 'utf-8' }));
-      sdfLint(sdfFile, schema, res);
-    } catch (err) {
-      res.errorCount = 1;
-      res.errors.parse = err.message;
-    }
+      } catch (err) {
+        res.errorCount++;
+        res.errors.parse = err.message;
+      }
 
+    sdfLint(sdfFile, schema, res, options);
     console.dir(res, {depth: null});
 
     process.exit(res.errorCount);
   }
   else {
-    console.log("Usage: node sdflint sdffile.json [schemafile.json]");
+    console.log(`
+    Usage: node sdflint sdffile.json [options as key=value pairs]
+
+    Options:
+     schema   The filename of the JSON schema to use
+     license  The license string to accept as valid
+    `
+  );
   }
 }
 
@@ -81,27 +96,54 @@ function validCharsCheck(sdfFile, res) {
 }
 
 
-function sdfLint(sdfFile, schema, res) {
-  let ajv = new Ajv(AJV_OPTIONS);
-
-  validCharsCheck(sdfFile, res);
-
-  if (! schema) {
-    schema = JSON.parse(fs.readFileSync(
-      DEF_SCHEMA_FILE, { encoding: 'utf-8' }));
+function licenseCheck(sdf, license, res) {
+  if (! sdf.info || ! sdf.info.license) {
+    res.errorCount++;
+    res.errors.license = "No license defined in model"
+  } else if (sdf.info.license != license) {
+    res.errorCount++;
+    res.errors.license = "Model has license '" + sdf.info.license +
+     "' expected '" + license + "'";
   }
+}
+
+
+function sdfLint(sdfFile, schema, res, options) {
+  let ajv = new Ajv(AJV_OPTIONS);
+  let sdf;
+
   if (! res) {
     res = {
       errorCount: 0,
       errors: {}
     };
   }
+  if (! options) {
+    options = {};
+  }
+
+  try {
+    sdf = JSON.parse(sdfFile);
+  } catch  (err) {
+    res.errorCount++;
+    res.errors.parse = err.message;
+  }
+  validCharsCheck(sdfFile, res);
+
+  if (! schema) {
+    schema = JSON.parse(fs.readFileSync(
+      DEF_SCHEMA_FILE, { encoding: 'utf-8' }));
+  }
 
   let validate = ajv.compile(schema);
 
-  if (!validate(sdfFile)) {
+  if (!validate(sdf)) {
     res.errors.schema = validate.errors;
     res.errorCount++;
+  }
+
+  if (options.license) {
+    licenseCheck(sdf, options.license, res);
   }
 
   return res;
