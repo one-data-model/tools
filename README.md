@@ -1,5 +1,7 @@
 # SDF tools
 
+This repository contains SDF tools hosted by OneDM. List of other SDF tools can be found in the [wiki](https://github.com/one-data-model/tools/wiki/Related-tools).
+
 ## SDF linter
 
 The sdflint.js program checks the validity of the given SDF file.
