@@ -48,11 +48,16 @@ if (require.main === module) { /* run as stand-alone? */
     try {
       sdfFile = fs.readFileSync(inFile,
         { encoding: 'utf-8' });
+      } catch (err) {
+        console.error("Can't read input SDF file: " + err.message);
+        process.exit(1);
+      }
+    try {
       schema = JSON.parse(fs.readFileSync(schemaFile,
         { encoding: 'utf-8' }));
       } catch (err) {
-        res.errorCount++;
-        res.errors.parse = err.message;
+        console.error("Can't read schema file: " + err.message);
+        process.exit(1);
       }
 
     sdfLint(sdfFile, schema, res, options);
@@ -87,6 +92,11 @@ function fileNameCheck(fileName, res) {
 
 function validCharsCheck(sdfFile, res) {
   let sdfStr = JSON.stringify(sdfFile);
+  if (!sdfStr) {
+    res.errorCount++;
+    res.errors.file = "Invalid SDF file";
+    return;
+  };
   let invalidLoc = sdfStr.search(new RegExp(VALID_CHARS_RE));
   if (invalidLoc != -1) {
     res.errorCount++;
