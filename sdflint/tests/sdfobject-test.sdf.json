@@ -1,0 +1,112 @@
+{
+    "info": {
+        "title": "Test object",
+        "copyright": "Example Test Corp 2023",
+        "license": "BSD-3-Clause",
+        "version": "2023-11-04",
+        "features": [],
+        "$comment": "Test comment",
+        "modified": "2023-11-04"
+    },
+    "namespace": {
+        "foo": "https://foo.example.com/models",
+        "bar": " https://foo.example.com/bar"
+    },
+    "defaultNamespace": "foo",
+    "sdfObject": {
+        "TestObject": {
+            "sdfProperty": {
+                "IntegerTestProperty": {
+                    "description": "Integer temperature read-only",
+                    "type": "integer",
+                    "minimum": -3,
+                    "maximum": 50,
+                    "unit": "Cel",
+                    "writable": false
+                },
+                "StringTestProperty": {
+                    "label": "String Test Property",
+                    "type": "string",
+                    "readable": true
+                },
+                "BooleanTestProperty": {
+                    "type": "boolean",
+                    "nullable": true
+                },
+                "ArrayTestProperty": {
+                    "type": "array",
+                    "maxItems": 10,
+                    "minItems": 2,
+                    "items" : {
+                        "type": "integer"
+                    }
+                },
+                "FormatTestProperty": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "EnumTestProperty": {
+                    "type": "string",
+                    "enum": ["foo", "bar", "baz"]
+                },
+                "ChoiceTestProperty": {
+                    "type": "string",
+                    "sdfChoice": {
+                        "foo" : {
+                            "description": "Foo value",
+                            "const": 1
+                        },
+                        "bar": {
+                            "description": "Bar value",
+                            "const": 2
+                        }
+                    }
+                },
+                "DefaultValueTestProperty": {
+                    "default": "foo",
+                    "type": "string"
+                },
+                "ExclusiveLimitsTestProperty": {
+                    "type": "integer",
+                    "exclusiveMaximum": 50,
+                    "exclusiveMinimum": -3
+                },
+                "RequiredTestProperty": {
+                    "type": "boolean",
+                    "sdfRequired": [
+                        true
+                    ]
+                }
+            },
+            "sdfRequired": [
+                "TestAction",
+                "#/sdfObject/TestObject/sdfProperty/IntegerTestProperty"
+            ],
+            "sdfAction": {
+                "TestAction": {
+                    "description": "Action for testing",
+                    "sdfInputData": {
+                        "type": "number"
+                    },
+                    "sdfOutputData": {
+                        "type": "string"
+                    }
+                },
+                "TestActionObjectOutput": {
+                    "description": "Test action with Object output data",
+                    "sdfOutputData": {
+                        "type": "object",
+                        "properties": {
+                            "a": {
+                                "type": "integer"
+                            },
+                            "b": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
