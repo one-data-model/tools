@@ -27,8 +27,24 @@ try {
 if (testCases.length > 0) {
   runTestCases(testCases);
 } else {
-  /* change random quality value to 42 100 times */
-  breakQualities(100, 42);
+  let sdfData;
+  try {
+    sdfData = fs.readFileSync(modelFile,
+      { encoding: 'utf-8' });
+  } catch (err) {
+    fail("Can't read SDF model file: " + err.message);
+  }
+
+  let lintRes = sdfLint.sdfLint(sdfData, schema);
+  if (lintRes.errorCount > 1) {
+    console.dir(sdfData, { "depth": null });
+    fail("SDF model has errors");
+  }
+
+  let origSDF = JSON.parse(sdfData);
+  changeAndValidate(origSDF, "FOOBAR", "", origSDF);
+  changeAndValidate(origSDF, 42, "", origSDF);
+
 }
 
 function runTestCases(testCases) {
@@ -59,51 +75,43 @@ function runTestCases(testCases) {
 
 }
 
-function breakQualities(tryCount, newValue) {
-  let sdfData;
-  try {
-    sdfData = fs.readFileSync(modelFile,
-      { encoding: 'utf-8' });
-  } catch (err) {
-    fail("Can't read SDF model file: " + err.message);
-  }
 
-  let lintRes = sdfLint.sdfLint(sdfData, schema);
-  if (lintRes.errorCount > 1) {
-    console.dir(sdfData, { "depth": null });
-    fail("SDF model has errors");
-  }
-
-  for (let i = 0; i < tryCount; i++) {
-    let sdf = JSON.parse(sdfData);
-    let changedElement = randomChangeValue(sdf, newValue, "");
-    if (VERBOSE) {
-      console.log("Changing " + changedElement + " -> " + newValue);
-    }
-    lintRes = sdfLint.sdfLint(sdf, schema, undefined, { "isJSON": true });
-    if (lintRes.errorCount == 0) {
-      console.log("Missed change: " + changedElement + " -> " + newValue);
-    }
+function validate(sdf, schema, changedElement, newValue){
+  let lintRes = sdfLint.sdfLint(sdf, schema, undefined, { "isJSON": true });
+  if (lintRes.errorCount == 0) {
+    console.log("Missed change: " + changedElement + " -> " + 
+      JSON.stringify(newValue));
+    } else if (VERBOSE) {
+    console.log("Caught change: " + changedElement + " -> " + 
+      JSON.stringify(newValue));
+    console.log(lintRes.errors.schema);
   }
 }
 
-/* randomly change one JSON object member or array value to newVal */
-function randomChangeValue(json, newVal, path) {
+
+/* one by one change qualities in the SDF file and validate result */
+function changeAndValidate(json, newVal, path, origSDF) {
   const keys = Object.keys(json);
-  const randomKey = keys[Math.floor(Math.random() * keys.length)];
-  if (typeof json[randomKey] === 'object') {
-    return randomChangeValue(json[randomKey], newVal, path + randomKey + '/');
-  } else if (Array.isArray(json)) {
-    if (json.length > 0) {
-      json[randomKey] = newVal;
-    } else {
-      json[0] = newVal;
+  if (VERBOSE) {
+    console.log("At " + path);
+  }
+  keys.forEach (key => {
+    if (typeof json[key] === 'object') {
+      return changeAndValidate(json[key], newVal, path + key + '/', origSDF);
+    } else if (Array.isArray(json)) {
+      if (json.length == 0) {
+        key = 0;
+      }
+      let oldVal = json[key];
+      json[key] = newVal;
+      validate(origSDF, schema, path + key, newVal);
+      json[key] = oldVal;
     }
-    return path + randomKey;
-  }
-  else {
-    json[randomKey] = newVal;
-    return path + randomKey;
-  }
+    else {
+      let oldVal = json[key];
+      json[key] = newVal;
+      validate(origSDF, schema, path + key, newVal);
+      json[key] = oldVal;
+    }  
+  });
 }
-
