@@ -6,11 +6,11 @@
         "version": "2023-11-04",
         "features": [],
         "$comment": "Test comment",
-        "modified": "2023-11-04"
+        "modified": "2023-11-05"
     },
     "namespace": {
         "foo": "https://foo.example.com/models",
-        "bar": " https://foo.example.com/bar"
+        "bar": "https://foo.example.com/bar"
     },
     "defaultNamespace": "foo",
     "sdfObject": {
@@ -76,6 +76,10 @@
                     "sdfRequired": [
                         true
                     ]
+                },
+                "RefTestProperty": {
+                    "sdfRef": "#/sdfObject/TestObject/sdfData/TestData",
+                    "description": "sdfRef test property"
                 }
             },
             "sdfRequired": [
@@ -105,6 +109,13 @@
                             }
                         }
                     }
+                }
+            },
+            "sdfData": {
+                "TestData": {
+                    "type": "string",
+                    "sdfType": "byte-string",
+                    "contentFormat": "60"
                 }
             }
         }
