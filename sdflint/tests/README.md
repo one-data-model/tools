@@ -4,7 +4,7 @@ This folder contains a simple test program and test cases for testing if the SDF
 
 The program `test-schema.js` takes at minimum two parameters: a (valid) SDF document used as basis for testing and a schema file used to validate the document. 
 
-For example: `node test-schema.js sdfthing-test.sdf.json ../sdf-validation.jso.json`
+For example: `node test-schema.js sdfobject-test.sdf.json ../sdf-validation.jso.json`
 
 The `sdfobject-test.sdf.json` is an SDF document that exercises many of the features of SDF Object definition and is a good start for the SDF document used with testing.
 
