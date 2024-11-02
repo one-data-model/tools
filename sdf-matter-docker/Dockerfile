@@ -20,5 +20,4 @@ RUN cmake .
 RUN cmake --build .
 
 
-# CMD ["./sdf-matter-converter"]
-CMD ["/bin/bash"]
+CMD ["/sdf-matter/sdf_matter_converter"]
