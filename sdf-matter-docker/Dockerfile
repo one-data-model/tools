@@ -19,5 +19,7 @@ RUN git clone https://github.com/niklasbhv/sdf-matter-converter .
 RUN cmake .
 RUN cmake --build .
 
+ENV PATH /sdf-matter:$PATH
 
-CMD ["/sdf-matter/sdf_matter_converter"]
+
+ENTRYPOINT [ "sdf_matter_converter" ]
