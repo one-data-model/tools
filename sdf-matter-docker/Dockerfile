@@ -19,7 +19,11 @@ RUN git clone https://github.com/niklasbhv/sdf-matter-converter .
 RUN cmake .
 RUN cmake --build .
 
+RUN git clone https://github.com/project-chip/connectedhomeip.git /matter
+RUN rm /matter/data_model/master/clusters/cluster_ids.json
+
 ENV PATH /sdf-matter:$PATH
 
+WORKDIR /matter
 
 ENTRYPOINT [ "sdf_matter_converter" ]
