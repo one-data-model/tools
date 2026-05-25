@@ -1,0 +1,11 @@
+{
+    "sdfObject": {
+        "TestObject": {
+            "sdfProperty": {
+                "IntegerTestProperty": {
+                    "description": 42
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "sdfObject": {
+        "TestObject": {
+            "sdfProperty": {
+                "IntegerTestProperty": {
+                    "type": null,
+                    "typemisspelled" : "integer"
+                }
+            }
+        }
+    }
+}
