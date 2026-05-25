@@ -35,8 +35,14 @@ if (require.main === module) { /* run as stand-alone? */
     let schemaFile;
 
     process.argv.slice(3).forEach((option) => {
-      let name = option.substring(0, option.indexOf("="));
-      let value = option.substring(option.indexOf("=") + 1);
+      let eqIndex = option.indexOf("=");
+      if (eqIndex === -1) {
+        console.error("Invalid option (missing '='): " + option);
+        process.exitCode = 1;
+        return;
+      }
+      let name = option.substring(0, eqIndex);
+      let value = option.substring(eqIndex + 1);
       options[name] = value;
     });
 
@@ -63,7 +69,7 @@ if (require.main === module) { /* run as stand-alone? */
     sdfLint(sdfFile, schema, res, options);
     console.dir(res, { depth: null });
 
-    process.exit(res.errorCount);
+    process.exitCode = res.errorCount;
   }
   else {
     console.log(`
@@ -90,8 +96,7 @@ function fileNameCheck(fileName, res) {
 }
 
 
-function validCharsCheck(sdfFile, res) {
-  let sdfStr = JSON.stringify(sdfFile);
+function validCharsCheck(sdfStr, res) {
   if (!sdfStr) {
     res.errorCount++;
     res.errors.file = "Invalid SDF file";
@@ -140,6 +145,7 @@ function sdfLint(sdfFile, schema, res, options) {
     } catch (err) {
       res.errorCount++;
       res.errors.parse = err.message;
+      return res;
     }
     validCharsCheck(sdfFile, res);
   }
